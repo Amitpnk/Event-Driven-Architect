@@ -1,3 +1,4 @@
+using EventDrivenArchitect.Common.Configurations;
 using EventDrivenArchitect.Configurations;
 using EventDrivenArchitect.Services;
 using Microsoft.Extensions.Options;

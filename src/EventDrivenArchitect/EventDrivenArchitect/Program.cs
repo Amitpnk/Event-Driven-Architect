@@ -1,8 +1,8 @@
 using EventDrivenArchitect;
-using EventDrivenArchitect.Configurations;
 using EventDrivenArchitect.Services;
 using Polly;
 using System.Runtime;
+using EventDrivenArchitect.Common.Configurations;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

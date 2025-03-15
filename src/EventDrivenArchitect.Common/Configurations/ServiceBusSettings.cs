@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventDrivenArchitect.Configurations
+namespace EventDrivenArchitect.Common.Configurations
 {
-    public class EventHubSettings
+    public class ServiceBusSettings
     {
         public string ConnectionString { get; set; }
-        public string EventHubName { get; set; }
-        public string ConsumerGroup { get; set; }
+        public string TopicName { get; set; }
     }
-
 }

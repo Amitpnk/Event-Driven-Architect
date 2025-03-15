@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
-using EventDrivenArchitect.Configurations;
+using EventDrivenArchitect.Common.Configurations;
 using EventDrivenArchitect.Events;
 using MediatR;
 using Microsoft.Extensions.Options;

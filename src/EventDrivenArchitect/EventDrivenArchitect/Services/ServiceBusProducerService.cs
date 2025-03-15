@@ -1,11 +1,11 @@
-﻿using EventDrivenArchitect.Configurations;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using EventDrivenArchitect.Common.Configurations;
 using Polly.Retry;
 using Polly;
 using Polly.CircuitBreaker;
