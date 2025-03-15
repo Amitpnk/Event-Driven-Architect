@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using EventDrivenArchitect.Configurations;
+using EventDrivenArchitect.Events;
+using MediatR;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.CircuitBreaker;
@@ -18,16 +20,18 @@ namespace EventDrivenArchitect.Services
         private readonly EventHubSettings _settings;
         private readonly ILogger<EventHubConsumerService> _logger;
         private readonly ServiceBusProducerService _serviceBusProducer;
+        private readonly IMediator _mediator;
         private readonly AsyncRetryPolicy _retryPolicy;
         private readonly AsyncCircuitBreakerPolicy _circuitBreakerPolicy;
         private readonly AsyncPolicyWrap _policyWrap;
 
         public EventHubConsumerService(IOptions<EventHubSettings> settings,
-            ILogger<EventHubConsumerService> logger, ServiceBusProducerService serviceBusProducer)
+            ILogger<EventHubConsumerService> logger, ServiceBusProducerService serviceBusProducer, IMediator mediator)
         {
             _settings = settings.Value;
             _logger = logger;
             _serviceBusProducer = serviceBusProducer;
+            _mediator = mediator;
 
             // Retry policy: 3 retries with exponential backoff
             _retryPolicy = Policy
@@ -73,8 +77,8 @@ namespace EventDrivenArchitect.Services
 
                     await _policyWrap.ExecuteAsync(async () =>
                     {
-
-                        await _serviceBusProducer.SendMessageAsync(message);
+                        await _mediator.Publish(new EventReceived(message));
+                        //await _serviceBusProducer.SendMessageAsync(message);
                     });
                 }
             }

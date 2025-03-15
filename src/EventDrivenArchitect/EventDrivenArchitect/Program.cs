@@ -13,5 +13,9 @@ builder.Services.Configure<EventHubSettings>(builder.Configuration.GetSection("E
 builder.Services.Configure<ServiceBusSettings>(builder.Configuration.GetSection("ServiceBusSettings"));
 builder.Services.AddSingleton<ServiceBusProducerService>();
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+
+
 var host = builder.Build();
 host.Run();

@@ -69,6 +69,7 @@ namespace EventDrivenArchitect.Services
                     await _sender.SendMessageAsync(serviceBusMessage);
                     _logger.LogInformation("Message sent to Service Bus.");
                 });
+
             }
             catch (BrokenCircuitException)
             {
@@ -96,5 +97,6 @@ namespace EventDrivenArchitect.Services
             }
         }
     }
+
 
 }
