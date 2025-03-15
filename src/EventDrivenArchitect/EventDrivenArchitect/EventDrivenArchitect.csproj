@@ -8,9 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.11.6" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.11.6" />
+    <PackageReference Include="Polly" Version="8.5.2" />
+    <!--<PackageReference Include="Polly.Core" Version="8.5.2" />-->
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,5 @@
-using System.Runtime;
-using System.Text;
-using Azure.Messaging.EventHubs.Consumer;
 using EventDrivenArchitect.Configurations;
+using EventDrivenArchitect.Services;
 using Microsoft.Extensions.Options;
 
 namespace EventDrivenArchitect;
@@ -9,11 +7,13 @@ namespace EventDrivenArchitect;
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
+    private readonly EventHubConsumerService _eventHubConsumerService;
     private readonly EventHubSettings _settings;
 
-    public Worker(ILogger<Worker> logger, IOptions<EventHubSettings> settings)
+    public Worker(ILogger<Worker> logger, IOptions<EventHubSettings> settings, EventHubConsumerService eventHubConsumerService)
     {
         _logger = logger;
+        _eventHubConsumerService = eventHubConsumerService;
         _settings = settings.Value;
     }
 
@@ -22,19 +22,10 @@ public class Worker : BackgroundService
 
         _logger.LogInformation($"Starting event hub");
 
-        string ehubNamespaceConnectionString = _settings.ConnectionString;
-        string eventHubName = _settings.EventHubName;
-        string consumerGroup = _settings.ConsumerGroup;
-
         while (!stoppingToken.IsCancellationRequested)
         {
-            var consumer = new EventHubConsumerClient(consumerGroup, ehubNamespaceConnectionString, eventHubName);
-
-            await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync())
-            {
-                _logger.LogInformation($"Message Received: {Encoding.Default.GetString(partitionEvent.Data.Body.Span)}");
-            }
-
+            await _eventHubConsumerService.StartProcessingAsync();
+            
             await Task.Delay(1000, stoppingToken);
         }
     }
