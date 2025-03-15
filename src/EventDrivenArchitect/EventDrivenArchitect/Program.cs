@@ -1,7 +1,5 @@
 using EventDrivenArchitect;
 using EventDrivenArchitect.Services;
-using Polly;
-using System.Runtime;
 using EventDrivenArchitect.Common.Configurations;
 
 var builder = Host.CreateApplicationBuilder(args);
