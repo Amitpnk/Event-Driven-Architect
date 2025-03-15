@@ -71,9 +71,8 @@ namespace EventDrivenArchitect.Services
                     string message = Encoding.UTF8.GetString(receivedEvent.Data.Body.ToArray());
                     _logger.LogInformation($"Received message: {message}");
 
-                    await _retryPolicy.ExecuteAsync(async () =>
+                    await _policyWrap.ExecuteAsync(async () =>
                     {
-                        _logger.LogInformation($"business logic");
 
                         await _serviceBusProducer.SendMessageAsync(message);
                     });
